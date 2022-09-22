@@ -3,7 +3,8 @@
 #include <Eigen/Eigen>
 
 #include <cassert>
-#include <cmath>
+
+import std;
 
 namespace fcarouge::sample {
 namespace {

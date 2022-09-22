@@ -3,7 +3,8 @@
 #include <Eigen/Eigen>
 
 #include <cassert>
-#include <cmath>
+
+import std;
 
 template <typename Numerator, fcarouge::algebraic Denominator>
 auto fcarouge::operator/(const Numerator &lhs, const Denominator &rhs)

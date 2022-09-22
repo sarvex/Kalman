@@ -41,8 +41,7 @@ For more information, please refer to <https://unlicense.org> */
 
 #include "fcarouge/utility.hpp"
 
-#include <functional>
-#include <tuple>
+import std;
 
 namespace fcarouge::internal {
 

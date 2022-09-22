@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+import std;
+
 namespace fcarouge::sample {
 namespace {
 //! @brief Estimating the height of a building.

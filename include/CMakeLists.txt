@@ -37,13 +37,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <https://unlicense.org> ]]
 
 if(WIN32)
-  set(OPTIONS "/EHsc" "/W4")
+  set(OPTIONS "/EHsc" "/W4" "/experimental:module" "/std:c++latest")
 else()
   set(OPTIONS
       "-ansi"
       "-fno-check-new"
       "-fno-common"
       "-fstrict-aliasing"
+      "-fmodules-ts"
       "-pedantic"
       "-Wall"
       "-Wcast-align"
