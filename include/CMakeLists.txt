@@ -77,6 +77,7 @@ target_sources(
             "fcarouge/internal/kalman.tpp"
             "fcarouge/internal/utility.hpp"
             "fcarouge/kalman.hpp"
+            "fcarouge/linalg.hpp"
             "fcarouge/utility.hpp")
 target_compile_options(kalman INTERFACE ${OPTIONS})
 target_link_libraries(kalman INTERFACE $<$<NOT:$<BOOL:${WIN32}>>:kalman_format>)

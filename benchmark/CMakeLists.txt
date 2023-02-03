@@ -78,6 +78,47 @@ endforeach()
 
 foreach(STATE_SIZE RANGE 1 2)
   foreach(OUTPUT_SIZE RANGE 1 2)
+    configure_file(const_update_xx0.cpp
+                   const_update_${STATE_SIZE}x${OUTPUT_SIZE}x0.cpp)
+    get_filename_component(NAME const_update_${STATE_SIZE}x${OUTPUT_SIZE}x0.cpp
+                           NAME_WE)
+    add_executable(kalman_benchmark_${NAME}_driver
+                   const_update_${STATE_SIZE}x${OUTPUT_SIZE}x0.cpp)
+    target_include_directories(kalman_benchmark_${NAME}_driver
+                               PRIVATE "include")
+    set_target_properties(kalman_benchmark_${NAME}_driver
+                          PROPERTIES CXX_STANDARD 23)
+    set_target_properties(kalman_benchmark_${NAME}_driver
+                          PROPERTIES CXX_EXTENSIONS OFF)
+    target_link_libraries(
+      kalman_benchmark_${NAME}_driver PRIVATE benchmark::benchmark
+                                              benchmark::benchmark_main kalman)
+    add_test(kalman_benchmark_${NAME} kalman_benchmark_${NAME}_driver
+             "--benchmark_out=${NAME}.json")
+  endforeach()
+  foreach(INPUT_SIZE RANGE 1 2)
+    configure_file(const_predict_x1x.cpp
+                   const_predict_${STATE_SIZE}x1x${INPUT_SIZE}.cpp)
+    get_filename_component(NAME const_predict_${STATE_SIZE}x1x${INPUT_SIZE}.cpp
+                           NAME_WE)
+    add_executable(kalman_benchmark_${NAME}_driver
+                   const_predict_${STATE_SIZE}x1x${INPUT_SIZE}.cpp)
+    target_include_directories(kalman_benchmark_${NAME}_driver
+                               PRIVATE "include")
+    set_target_properties(kalman_benchmark_${NAME}_driver
+                          PROPERTIES CXX_STANDARD 23)
+    set_target_properties(kalman_benchmark_${NAME}_driver
+                          PROPERTIES CXX_EXTENSIONS OFF)
+    target_link_libraries(
+      kalman_benchmark_${NAME}_driver PRIVATE benchmark::benchmark
+                                              benchmark::benchmark_main kalman)
+    add_test(kalman_benchmark_${NAME} kalman_benchmark_${NAME}_driver
+             "--benchmark_out=${NAME}.json")
+  endforeach()
+endforeach()
+
+foreach(STATE_SIZE RANGE 1 2)
+  foreach(OUTPUT_SIZE RANGE 1 2)
     configure_file(eigen_update_xx0.cpp
                    eigen_update_${STATE_SIZE}x${OUTPUT_SIZE}x0.cpp)
     get_filename_component(NAME eigen_update_${STATE_SIZE}x${OUTPUT_SIZE}x0.cpp

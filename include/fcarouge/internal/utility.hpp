@@ -109,6 +109,9 @@ template <typename Matrix>
 requires requires(Matrix value) { value.Zero(); }
 inline const auto zero_v<Matrix>{Matrix::Zero()};
 
+inline constexpr auto adl_transpose{
+    [](const auto &value) { return transpose(value); }};
+
 struct transpose final {
   template <arithmetic Arithmetic>
   [[nodiscard]] inline constexpr auto
@@ -120,6 +123,11 @@ struct transpose final {
   requires requires(Matrix value) { value.transpose(); }
   [[nodiscard]] inline constexpr auto operator()(const Matrix &value) const {
     return value.transpose();
+  }
+
+  template <typename Matrix>
+  [[nodiscard]] inline constexpr auto operator()(const Matrix &value) const {
+    return adl_transpose(value);
   }
 };
 
@@ -138,6 +146,29 @@ struct deducer final {
   [[nodiscard]] inline constexpr auto operator()(const Lhs &lhs,
                                                  const Rhs &rhs) const
       -> decltype(lhs / rhs);
+
+  // Type-erased matrix first party linear algebra support.
+  template <template <typename, auto, auto> typename Matrix, typename Type,
+            auto M, auto N, auto O>
+  requires(M > 1 || O > 1) [[nodiscard]] inline constexpr auto
+  operator()(const Matrix<Type, M, N> &lhs, const Matrix<Type, O, N> &rhs) const
+      -> Matrix<Type, M, O>;
+
+  template <template <typename, auto, auto> typename Matrix, typename Type,
+            auto N>
+  [[nodiscard]] inline constexpr auto
+  operator()(const Matrix<Type, 1, N> &lhs, const Matrix<Type, 1, N> &rhs) const
+      -> Type;
+
+  template <template <typename, auto, auto> typename Lhs, typename Type, auto M>
+  requires(M > 1) [[nodiscard]] inline constexpr auto
+  operator()(const Lhs<Type, M, 1> &lhs, arithmetic auto rhs) const
+      -> Lhs<Type, M, 1>;
+
+  template <template <typename, auto, auto> typename Rhs, typename Type, auto O>
+  requires(O > 1) [[nodiscard]] inline constexpr auto
+  operator()(arithmetic auto lhs, const Rhs<Type, O, 1> &rhs) const
+      -> Rhs<Type, 1, O>;
 
   // Type-erased Eigen third party linear algebra support.
   template <eigen Lhs, eigen Rhs>

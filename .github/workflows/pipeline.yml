@@ -30,7 +30,7 @@ jobs:
         CXX: "${{ matrix.compiler }}"
       run: cmake -S . -B "build" -G "${{ matrix.generator }}"
     - name: "Build"
-      run: cmake --build "build" --config "${{ matrix.config }}" --verbose --parallel 4
+      run: cmake --build "build" --config "${{ matrix.config }}" --verbose --parallel 1
     - name: "Test"
       run: ctest --test-dir "build" --config "${{ matrix.config }}" --tests-regex "kalman_(test|sample)" --verbose --parallel 4
     - name: "Install"

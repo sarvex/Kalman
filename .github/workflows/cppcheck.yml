@@ -47,6 +47,9 @@ jobs:
           --enable=all \
           --error-exitcode=1 \
           --suppress=missingIncludeSystem \
+          --suppress=noExplicitConstructor:include/fcarouge/linalg.hpp \
+          --suppress=unusedFunction:benchmark/const_predict_x1x.cpp \
+          --suppress=unusedFunction:benchmark/const_update_xx0.cpp \
           --suppress=unusedFunction:benchmark/eigen_predict_x1x.cpp \
           --suppress=unusedFunction:benchmark/eigen_update_xx0.cpp \
           --suppress=unusedStructMember:sample/ekf_4x1x0_soaring.cpp \

@@ -46,13 +46,24 @@ FetchContent_MakeAvailable(eigen)
 
 foreach(
   TEST
+  "kalman_constructor_default_const_5x4x3.cpp"
   "kalman_constructor_default_float_1x1x1.cpp"
   "kalman_constructor_default.cpp"
   "kalman_f.cpp"
   "kalman_format_arguments.cpp"
   "kalman_format_float_1x1x1.cpp"
   "kalman_format.cpp"
-  "kalman_h.cpp")
+  "kalman_h.cpp"
+  "linalg_constructor_1x1.cpp"
+  "linalg_constructor_default.cpp"
+  "linalg_identity_1x1.cpp"
+  "linalg_identity_2x2.cpp"
+  "linalg_identity_default.cpp"
+  "linalg_operator_bracket_1x1.cpp"
+  "linalg_operator_bracket_1x2.cpp"
+  "linalg_zero_1x1.cpp"
+  "linalg_zero_2x2.cpp"
+  "linalg_zero_default.cpp")
   get_filename_component(NAME ${TEST} NAME_WE)
   add_executable(kalman_test_${NAME}_driver ${TEST})
   set_target_properties(kalman_test_${NAME}_driver PROPERTIES CXX_STANDARD 23)
